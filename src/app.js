@@ -1,13 +1,23 @@
 const express = require('express');
+const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Middleware para parsear JSON en el cuerpo de las peticiones
+const corsOptions = {
+  origin: [
+    'https://tu-frontend.vercel.app',
+    'http://localhost:5500'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
-// Montaje de rutas
 app.use('/api', userRoutes);
 
 module.exports = app;
